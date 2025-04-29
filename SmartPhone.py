@@ -2,45 +2,57 @@ from Address import Address
 
 class SmartPhone:
     def __init__(self):
-        self.address_list = []
+        self.contacts = []
 
     def input_addr_data(self):
-        self.name = input(" 이름을 입력하시오. : ")
-        self.phone = input(" 전화번호를 입력하시오 : ")
-        self.email = input(" 이메일을 입력하시오 : ")
-        self.address = input(" 주소를 입력하시오. :")
-        self.group = input(" 그룹(친구/가족)을 입력하시오. :")
-        address = Address(self.name, self.phone, self.email, self.address, self.group)
-        address.print_info()
-        return address
+        name = input(" 이름을 입력하시오. : ")
+        phone = input(" 전화번호를 입력하시오 : ")
+        email = input(" 이메일을 입력하시오 : ")
+        address = input(" 주소를 입력하시오. :")
+        group = input(" 그룹(친구/가족)을 입력하시오. :")
+        return Address(name, phone, email, address, group)
+        
         
     def add_addr(self, addr):
-        self.address_list.append(addr)
-        return 
+        if len(self.contacts) < 10:
+            self.contacts.append(addr)
+            print(" >>>> 데이터가 저장되었습니다.")
+        else:
+            print(" 연락처 저장 공간이 가득 찼습니다.")
+        
 
     def print_all_addr(self):
-        for addr in self.address_list:
-            Address.print_info(addr)
-        return
-
+        if not self.contacts:
+            print(" 저장된 연락처가 없습니다.")
+        else:
+            for i, addr in enumerate(self.contacts):
+                print(f" \n [{i+1}]")
+                addr.print_info()
+        
     def search_addr(self, name):
-        for addr in self.address_list:
+        for addr in self.contacts:
             if addr.name == name:
-                Address.print_info(addr)
-        return
+                addr.print_info()
+                return
+        print(f" {name}의 연락처를 찾을 수 없습니다.")
         
     def delete_addr(self, name):
-        for i, addr in enumerate(self.address_list):
+        for i, addr in enumerate(self.contacts):
             if addr.name == name:
-                del self.address_list[i]
-        return
+                self.contacts.remove(addr)
+                print(f" {name}의 연락처가 삭제되었습니다.")
+                return
+        print(f" {name}의 연락처를 찾을 수 없습니다.")
         
     def edit_addr(self, name, new_addr):
-        for i, addr in enumerate(self.address_list):
+        for i, addr in enumerate(self.contacts):
             if addr.name == name:
-                addr.name = new_addr.name
-                addr.phone = new_addr.phone
-        return    
+                self.contacts[i] = new_addr
+                print(f" {name}의 연락처가 수정되었습니다.")
+                return
+        print(f" {name}의 연락처를 찾을 수 없습니다.")
+            
+        
             
 
     
